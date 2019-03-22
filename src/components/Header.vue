@@ -1,5 +1,6 @@
 <template>
 <nav>
+  <v-container>
   <v-toolbar fixed class="blue lighten-1" dark>
     <v-toolbar-title class="mr-4 mt-4">
       <router-link class="home" tag="span" :to="{name: 'Home'}">Banknote Binder</router-link>
@@ -15,6 +16,7 @@
       <v-btn class="mt-4"  flat dark>Log Out</v-btn>
     </v-toolbar-items>
   </v-toolbar>
+  </v-container>
 </nav>
 </template>
 
@@ -29,6 +31,7 @@ export default {
 nav {
   height: 100px;
 }
+
 .home {
   font-size: 40px;
 }

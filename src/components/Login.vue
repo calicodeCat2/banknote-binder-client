@@ -1,15 +1,15 @@
 <template>
-  <v-container>
+  <v-container class="sign-up">
     <v-layout name="login">
-      <v-flex xs8 offset-xs-1>
+      <v-flex xs10 offset-xs1>
         <panel title="Login" align-center>
-          <v-text-field label="Email" v-model="email"></v-text-field>
+          <v-form v-on:submit="login">
+          <v-text-field type="text" label="Email" v-model="email"></v-text-field>
           <br>
           <v-text-field label="Password" type="password" v-model="password"></v-text-field>
           <br>
-          <div class="danger-alert" v-html="error"/>
-          <br>
-          <v-btn dark class="blue darken-3" @click="login">Login</v-btn>
+          <v-btn type="submit" dark class="blue darken-3" @click="login" >Login</v-btn>
+          </v-form>
         </panel>
       </v-flex>
     </v-layout>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import LoginService from "@/services/LoginService";
+
 export default {
   data() {
     return {
@@ -26,24 +26,21 @@ export default {
     };
   },
   methods: {
-    login () {
+    login (e) {
       console.log('CLICK, CLICK, CLICK, CLICK');
-      
-      // try {
-      //   const response = await AuthenticationService.login({
-      //     email: this.email,
-      //     password: this.password
-      //   })
-      //   this.$store.dispatch('setToken', response.data.token)
-      //   this.$store.dispatch('setUser', response.data.user)
-      //   this.$router.push({
-      //     name: 'songs'
-      //   })
-      // } catch (error) {
-      //   this.error = error.response.data.error
-      // }
+      e.preventDefault()
+    const { email, password } = this
+    this.$store.dispatch({ email, password }).then(() =>{
+      this.$router.push('/dashboard')
+    })
+    .catch((error) => {
+      console.error(error)
+    })
     }
-  }
+  },
+  // components: {
+  //   ComponentPanel
+  // }
 };
 </script>
 
@@ -64,4 +61,5 @@ li {
 a {
   color: #42b983;
 }
+
 </style>

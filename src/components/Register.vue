@@ -1,7 +1,7 @@
 <template>
 <v-container>
   <v-layout column>
-    <v-flex xs6 offset-xs3>
+    <v-flex xs10 offset-xs1>
       <panel title="Register">
         <form name="register-form" autocomplete="off">
           <v-text-field label="First Name" v-model="firstName"></v-text-field>

@@ -6,8 +6,9 @@ import Login from "@/components/Login";
 import NoteBrowser from "@/components/NoteBrowser";
 import NewIssues from "@/components/NewIssues";
 import Banknotes from "@/components/Banknotes";
-import Users from "@/components/Users";
-import NoteFilter from "@/components/NoteFilter";
+import Dashboard from "@/components/Dashboard";
+import NoteSelect from "@/components/NoteSelect";
+import RegionSelect from "@/components/RegionSelect"
 import ForumMain from "@/components/ForumMain";
 import Test from "@/components/Test";
 
@@ -52,9 +53,14 @@ export default new Router({
       component: Test
     },
     {
-      path: "/filter",
-      name: "filter",
-      component: NoteFilter
+      path: "/select",
+      name: "select",
+      component: NoteSelect
+    },
+    {
+      path: '/region',
+      name: 'region',
+      component: RegionSelect
     },
     {
       path: "/forum",
@@ -62,9 +68,9 @@ export default new Router({
       component: ForumMain
     },
     {
-      path: "/users",
-      name: "users",
-      component: Users
+      path: "/dashboard",
+      name: "dashboard",
+      component: Dashboard
     },
   ]
 });

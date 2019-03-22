@@ -10,8 +10,8 @@
                             <v-img :src="item.img_url"></v-img>   
                         </v-responsive>
                         <v-card-text>
-                            <div class="region">Region: {{item.region}}</div>
-                            <div class="country">Country: {{item.country}}</div>
+                            <div class="region">Region: {{item.region_name}}</div>
+                            <div class="country">Country: {{item.name}}</div>
                             <div class="calatog">Catalog #: {{item.catalog_no}}</div>
                             <div class="denomination">Denomination: {{item.denomination}} {{item.currency}}</div>
                             <div class="date">Date: {{item.issue_date}}</div>
