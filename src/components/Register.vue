@@ -4,23 +4,23 @@
     <v-flex xs10 offset-xs1>
       <panel title="Register">
         <form name="register-form" autocomplete="off">
-          <v-text-field label="First Name" v-model="firstName"></v-text-field>
+          <v-text-field label="First Name" v-model="first_name" required autofocus></v-text-field>
           <br>
-          <v-text-field label="Last Name" v-model="lastName"></v-text-field>
+          <v-text-field label="Last Name" v-model="last_name" required></v-text-field>
           <br>
-          <v-text-field label="Email" v-model="email"></v-text-field>
+          <v-text-field label="Email" v-model="email" required></v-text-field>
           <br>
           <v-text-field
             label="Password"
             type="password"
             v-model="password"
-            autocomplete="new-password"
+            required
           ></v-text-field>
         </form>
         <br>
         <div class="danger-alert" v-html="error"/>
         <br>
-        <v-btn dark class="blue darken-3" @click="register">Register</v-btn>
+        <v-btn dark class="blue darken-3" @click="submit">Register</v-btn>
       </panel>
     </v-flex>
   </v-layout>
@@ -32,19 +32,20 @@ import LoginService from "@/services/LoginService";
 export default {
   data() {
     return {
+      first_name: "",
+      last_name: "",
       email: "",
       password: ""
     };
   },
   methods: {
-    register() {
-      const response = LoginService.register({
-        email: this.email,
-        password: this.password
-      });
-      console.log("register button was clicked", response.data);
+    register: function () {
+    const { first_name, last_name, email, password } = this
+    this.$store.dispatch('register', { first_name, last_name, email, password }).then(() =>{
+      this.$router.push('/register')
+    })
     }
-  }
+  },
 };
 </script>
 

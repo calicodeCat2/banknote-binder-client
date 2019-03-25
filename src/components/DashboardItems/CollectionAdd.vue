@@ -1,17 +1,17 @@
 <template>
   <v-content>
     <v-container class="text-left">
-      <h1>Browse Banknotes</h1>
+      <h1>Add to Your Collection</h1>
       <h3>Seach by Region or Country</h3>
       <v-layout row>
         <v-flex xs6>
           <v-card light flat>
-      <RegionSelect/>
+            <RegionSelect/>
           </v-card>
         </v-flex>
         <v-flex xs6>
           <v-card light tile flat>
-      <CountrySelect align/>
+            <CountrySelect align/>
           </v-card>
         </v-flex>
       </v-layout>
@@ -47,8 +47,8 @@
 
 <script>
 import { mapState } from "vuex";
-import CountrySelect from "./CountrySelect";
-import RegionSelect from "./RegionSelect";
+import CountrySelect from "../CountrySelect";
+import RegionSelect from "../RegionSelect";
 export default {
   mounted() {
     this.$store.dispatch("loadBanknotes");
@@ -62,7 +62,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 </style>

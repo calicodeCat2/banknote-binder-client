@@ -3,12 +3,12 @@
     <v-layout name="login">
       <v-flex xs10 offset-xs1>
         <panel title="Login" align-center>
-          <v-form v-on:submit="login">
+          <v-form>
           <v-text-field type="text" label="Email" v-model="email"></v-text-field>
           <br>
           <v-text-field label="Password" type="password" v-model="password"></v-text-field>
           <br>
-          <v-btn type="submit" dark class="blue darken-3" @click="login" >Login</v-btn>
+          <v-btn type="submit" dark class="blue darken-3">Login</v-btn>
           </v-form>
         </panel>
       </v-flex>
@@ -26,21 +26,13 @@ export default {
     };
   },
   methods: {
-    login (e) {
-      console.log('CLICK, CLICK, CLICK, CLICK');
-      e.preventDefault()
-    const { email, password } = this
-    this.$store.dispatch({ email, password }).then(() =>{
+    login: function () {
+    const { email } = this
+    this.$store.dispatch('login', { email }).then(() =>{
       this.$router.push('/dashboard')
-    })
-    .catch((error) => {
-      console.error(error)
     })
     }
   },
-  // components: {
-  //   ComponentPanel
-  // }
 };
 </script>
 

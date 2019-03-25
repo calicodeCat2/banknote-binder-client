@@ -9,34 +9,78 @@ export default new vuex.Store({
     banknotes: [],
     users: [],
     newissues: [],
-    countryList: [],
-    regionList: []
+    countrylist: [],
+    regionlist: [],
+    usercollection: [],
   },
   getters: {
+    allBanknotes: state => {
+      return state.banknotes
+    },
+    allUsers: state => {
+      return state.users
+    },
+    newIssues: state => {
+      return state.newissues
+    },
+    // radomNote: state => {
+    //   console.log('state banknotes', state.banknotes);
+    //   return state.banknotes[Math.floor(Math.random() * state.banknotes.length)]
+    // },
+    getUserCollection: state => {
+      return state.usercollection.filter(collection => {
+        return collection.in_collection
+      })
+    },
+    getUserCollectionSize: state => {
+      return state.usercollection.filter(collection => {
+        return collection.in_collection
+      }).length;
+    },
+    getUserWantList: state => {
+      return state.usercollection.filter(collection => {
+        return collection.in_wantlist
+      });
+    },
+    getUserWantListSize: state => {
+      return state.usercollection.filter(collection => {
+        return collection.in_wantlist
+      }).length;
+    },
+    timeOnWantList: state => {
+      return state.usercollection.map(date => {
+        return date.created_at.substring(0, 10)
+      })
+    }
 
   },
   mutations: {
+    // State Setting mutations
     SET_BANKNOTES(state, banknotes) {
       state.banknotes = banknotes;
     },
-    SET_USERS(state, users) {
+    SET_USER(state, users) {
       state.users = users;
     },
-    SET_RANDOM(state, banknotes) {
-      state.banknotes = banknotes[Math.floor(Math.random() * banknotes.length)];
+    SET_USER_COLLECTION(state, usercollection) {
+      state.usercollection = usercollection;
     },
-    SET_USER(state, user) {
-      state.user = user;
+    SET_NEWUSER(state, users) {
+      state.users = users;
     },
     SET_NEWISSUES(state, newissues) {
       state.newissues = newissues;
     },
-    SET_COUNTRYLIST(state, countryList) {
-        state.countryList = countryList
+    SET_COUNTRYLIST(state, countrylist) {
+        state.countrylist = countrylist
       },
-    SET_REGIONLIST(state, regionList) {
-        state.regionList = regionList;
+    SET_REGIONLIST(state, regionlist) {
+        state.regionlist = regionlist;
     },
+    SET_COLLECTIONS(state, collections) {
+      state.collections = collections;
+    },
+    // State altering mutations
   },
   actions: {
     loginUser({ commit, dispatch }, user) {
@@ -45,6 +89,17 @@ export default new vuex.Store({
         .then(data => {
           let user = data.data;
           commit("SET_USER", user);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    registerUser({ commit, dispatch }, newUser) {
+      axios
+        .post("http://localhost:8000/users/adduser")
+        .then(data => {
+          let newUser = data.JSON.stringify();
+          commit("SET_NEWUSER", newUser);
         })
         .catch(error => {
           console.log(error);
@@ -73,12 +128,12 @@ export default new vuex.Store({
           console.log(error);
         });
     },
-    randomBanknotes({ commit }) {
+    loadUserCollection({ commit }) {
       axios
-        .get("http://localhost:8000/banknotes")
+        .get("http://localhost:8000/users/collection/3")
         .then(data => {
-          let banknotes = data.data;
-          commit("SET_RANDOM", banknotes);
+          let usercollection = data.data;          
+          commit("SET_USER_COLLECTION", usercollection);
         })
         .catch(error => {
           console.log(error);
@@ -99,8 +154,8 @@ export default new vuex.Store({
         axios
             .get('http://localhost:8000/banknotes/countries')
             .then(data => {
-                let countryList = data.data;
-                commit("SET_COUNTRYLIST", countryList);
+                let countrylist = data.data;
+                commit("SET_COUNTRYLIST", countrylist);
             })
             .catch(error => {
                 console.log(error);
@@ -110,12 +165,26 @@ export default new vuex.Store({
       axios
         .get("http://localhost:8000/regions")
         .then(data => {
-          let regionList = data.data;
-          commit("SET_REGIONLIST", regionList);
+          let regionlist = data.data;
+          commit("SET_REGIONLIST", regionlist);
         })
         .catch(error => {
           console.log(error);
         });
     },
+    loadCollections({ commit }) {
+      axios
+        .get("http://localhost:8000/regions")
+        .then(data => {
+          let collections = data.data;
+          commit("SET_COLLECTIONS", collections);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    logout({commit}) {
+      localStorage.removeItem('user')
+    }
   }
 });

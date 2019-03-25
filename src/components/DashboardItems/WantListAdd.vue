@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <v-container class="text-left">
-      <h1>Browse Banknotes</h1>
+      <h1>Add to Your Want List</h1>
       <h3>Seach by Region or Country</h3>
       <v-layout row>
         <v-flex xs6>
@@ -34,7 +34,7 @@
               <v-card-actions>
                 <v-btn flat color="blue">
                   <v-icon small left>star</v-icon>
-                  <span>Add to Collection</span>
+                  <span>Add to Want List</span>
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -47,22 +47,22 @@
 
 <script>
 import { mapState } from "vuex";
-import CountrySelect from "./CountrySelect";
-import RegionSelect from "./RegionSelect";
+import CountrySelect from "../CountrySelect";
+import RegionSelect from "../RegionSelect";
 export default {
-  mounted() {
+   mounted() {
     this.$store.dispatch("loadBanknotes");
   },
   computed: {
     ...mapState(["banknotes"])
-  },
-  components: {
+  },   
+    components: {
     CountrySelect,
     RegionSelect
   }
-};
+}
 </script>
 
-
 <style scoped>
+
 </style>

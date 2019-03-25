@@ -1,28 +1,14 @@
 <template>
-
- 
-
-    <v-dialog max-width="600px">
-        <v-btn flat slot="activator" class="success">Add New</v-btn>
-        <v-card>
-            <v-card-title>
-        
-            </v-card-title>
-            <v-card-text>
-                <v-form class="px-3">
-                    <v-text-field label="Title" v-model="title">
-
-                    </v-text-field>
-                    <v-textarea label="Info" v-model="info">
-
-                    </v-textarea>
-                </v-form>
-            </v-card-text>
-        </v-card>
-    </v-dialog>
-
-
- 
+<v-layout>
+<v-btn :to="{name: 'About'}">About</v-btn>
+<v-btn :to="{name: 'dashboard'}">Dashboard</v-btn>
+<v-btn :to="{name: 'CollectionAdd'}">Collection add</v-btn>
+<v-btn :to="{name: 'CollectionView'}">Collection view</v-btn>
+<v-btn :to="{name: 'WantListAdd'}">Want list add</v-btn>
+<v-btn :to="{name: 'WantListView'}">Want list view</v-btn>
+<v-btn :to="{name: 'region'}">Select region</v-btn>
+<v-btn :to="{name: 'select'}">select country</v-btn>
+</v-layout>
 </template>
 
 

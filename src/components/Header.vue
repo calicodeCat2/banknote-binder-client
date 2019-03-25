@@ -8,6 +8,7 @@
     <v-toolbar-items>
       <v-btn class="mt-4" flat dark :to="{name: 'browse'}">Browse Notes</v-btn>
       <v-btn class="mt-4"  flat dark :to="{name: 'newissues'}">New Issues</v-btn>
+      <v-btn class="mt-4"  flat dark :to="{name: 'About'}">About</v-btn>
     </v-toolbar-items>
     <v-spacer></v-spacer>
     <v-toolbar-items>
