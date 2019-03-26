@@ -1,7 +1,24 @@
 <template>
   <v-layout>
-    <h1>Collection Stats</h1>
     <v-container class="my-5">
+      <h1>Collection Stats</h1>
+      <v-layout row>
+        <v-flex xs6>
+          <v-card light flat>
+            <v-card-text class="total">Total Notes on Want List: {{totalCollection}}</v-card-text>
+          </v-card>
+        </v-flex>
+        <v-flex xs6>
+          <v-card light tile flat>
+            <v-card-text class="first">On Want List Longest:</v-card-text>
+          </v-card>
+        </v-flex>
+        <v-flex xs6>
+          <v-card light tile flat>
+            <v-card-text class="recent">Most Recent Want List Addition:</v-card-text>
+          </v-card>
+        </v-flex>
+      </v-layout>
       <v-layout row wrap>
         <v-flex m6 lg3 v-for="(item, index) in inCollection" :key="index">
           <v-card flat class="text-xs-center ma-3">
@@ -32,6 +49,9 @@ export default {
   computed: {
     inCollection() {
       return this.$store.getters.getUserCollection;
+    },
+    totalCollection() {
+      return this.$store.getters.getUserCollectionSize;
     },
     totalCollection() {
       return this.$store.getters.getUserCollectionSize;

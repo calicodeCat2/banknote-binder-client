@@ -5,15 +5,14 @@
         <v-select
           color="blue darken-4"
           class="form-control"
-          v-model="country"
+          v-model="selected"
           @change="onChange($event)"
           label="Choose Country"
-          value="countrylist.id"
           :items="countrylist"
           item-text="name"
           key="country.id"
         ></v-select>
-        {{country}}{{countrylist.id}}
+        {{selected}}
       </v-flex>
     </v-layout>
   </v-container>
@@ -27,12 +26,13 @@ export default {
   },
   data() {
     return {
-      country: "",
-      value: null
-    }
+      selected: ""
+    };
   },
   computed: {
-    ...mapState(["countrylist"])
+    countrylist() {
+      return this.$store.state.countrylist;
+    }
   },
   handleChange: function(event) {
     console.log(event);

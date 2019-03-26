@@ -2,19 +2,7 @@
   <v-content>
     <v-container class="text-left">
       <h1>Add to Your Collection</h1>
-      <h3>Seach by Region or Country</h3>
-      <v-layout row>
-        <v-flex xs6>
-          <v-card light flat>
-            <RegionSelect/>
-          </v-card>
-        </v-flex>
-        <v-flex xs6>
-          <v-card light tile flat>
-            <CountrySelect align/>
-          </v-card>
-        </v-flex>
-      </v-layout>
+      <CombinedSelect/>
     </v-container>
     <div class="notes">
       <v-container class="my-5">
@@ -32,7 +20,7 @@
                 <div class="date">Date: {{item.issue_date}}</div>
               </v-card-text>
               <v-card-actions>
-                <v-btn flat color="blue">
+                <v-btn v-on:click="addToCollection" flat color="blue">
                   <v-icon small left>star</v-icon>
                   <span>Add to Collection</span>
                 </v-btn>
@@ -47,18 +35,24 @@
 
 <script>
 import { mapState } from "vuex";
-import CountrySelect from "../CountrySelect";
-import RegionSelect from "../RegionSelect";
+import CombinedSelect from "../selects/CombinedSelect";
 export default {
   mounted() {
-    this.$store.dispatch("loadBanknotes");
+    this.$store.dispatch("loadBanknotes")
   },
   computed: {
-    ...mapState(["banknotes"])
+    banknotes () {
+      return this.$store.state.banknotes
+    }
+  },
+  methods: {
+    addToCollection: function() {
+
+    }
+
   },
   components: {
-    CountrySelect,
-    RegionSelect
+    CombinedSelect,
   }
 };
 </script>

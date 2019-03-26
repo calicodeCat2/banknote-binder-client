@@ -4,7 +4,7 @@
     <v-container class="my-5">
       <v-layout row wrap>
         <v-flex
-        v-for="(item, index) in addRandomNotes()" :key="index"
+      
          m6 lg3>
           <v-card flat class="text-xs-center ma-3">
             <v-responsive class="pt-4">

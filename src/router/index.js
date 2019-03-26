@@ -7,8 +7,9 @@ import Login from "@/components/Login";
 import NoteBrowser from "@/components/NoteBrowser";
 import NewIssues from "@/components/NewIssues";
 import Banknotes from "@/components/Banknotes";
-import CountrySelect from "@/components/CountrySelect";
-import RegionSelect from "@/components/RegionSelect"
+import CountrySelect from "@/components/selects/CountrySelect";
+import RegionSelect from "@/components/selects/RegionSelect"
+import CombinedSelect from "@/components/selects/CombinedSelect"
 import ForumMain from "@/components/ForumMain";
 import Test from "@/components/Test";
 import Dashboard from "@/components/Dashboard";
@@ -66,9 +67,14 @@ export default new Router({
       component: Test
     },
     {
+      path: "/country",
+      name: "country",
+      component: CountrySelect
+    },
+    {
       path: "/select",
       name: "select",
-      component: CountrySelect
+      component: CombinedSelect
     },
     {
       path: '/region',

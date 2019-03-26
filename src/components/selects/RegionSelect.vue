@@ -5,16 +5,14 @@
         <v-select
           color="blue darken-4"
           class="form-control"
-          v-model="region"
- 
+          v-model="selected"
+          @change="onChange($event)"
           label="Choose Region"
-          value="key"
-          :items="regionlist"
+          :items="regions"
           item-text="region_name"
-          key="region.id"
+          key="regions.region_name"
         ></v-select>
-        ]
-        {{region}}
+        {{selected}}
       </v-flex>
     </v-layout>
   </v-container>
@@ -25,17 +23,23 @@ import { mapState } from "vuex";
 export default {
   mounted() {
     this.$store.dispatch("loadRegionList");
+    this.$store.dispatch("loadCountryList");
   },
   data() {
     return {
-      region: "",
-      value: "key"
+      selected: ""
     };
   },
   computed: {
-    ...mapState(["regionlist"])
+    regions() {
+      return this.$store.state.regionlist
+    },
+    countries() {
+      return this.$store.state.countrylist
+    }
   },
   methods: {
+
     handleChange: function(event) {
       console.log(event);
     }

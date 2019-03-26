@@ -1,7 +1,7 @@
 <template>
   <v-layout>
-    <h1>View Want List</h1>
     <v-container class="text-left">
+    <h1>View Want List</h1>
       <v-layout row>
         <v-flex xs6>
           <v-card light flat>
@@ -13,7 +13,7 @@
         <v-flex xs6>
           <v-card light tile flat>
             <v-card-text class="first">
-              On Want List Longest:
+              On Want List Longest: {{firstEntry}}
             </v-card-text>
           </v-card>
         </v-flex>
@@ -65,11 +65,14 @@ export default {
     totalWantList() {
       return this.$store.getters.getUserWantListSize;
     },
-    timeOnList() {
-      return this.$store.getters.timeOnWantList
+    firstEntry() {
+      return this.$store.getters.wantItemCreatedDate
     },
   },
   methods: {
+    firstEntry() {
+      Math.min(...timeOnList)
+    }
 
   }
 };

@@ -11,48 +11,51 @@ export default new vuex.Store({
     newissues: [],
     countrylist: [],
     regionlist: [],
-    usercollection: [],
+    usercollection: []
   },
   getters: {
     allBanknotes: state => {
-      return state.banknotes
+      return state.banknotes;
     },
     allUsers: state => {
-      return state.users
+      return state.users;
     },
     newIssues: state => {
-      return state.newissues
+      return state.newissues;
     },
-    // radomNote: state => {
-    //   console.log('state banknotes', state.banknotes);
-    //   return state.banknotes[Math.floor(Math.random() * state.banknotes.length)]
-    // },
     getUserCollection: state => {
       return state.usercollection.filter(collection => {
-        return collection.in_collection
-      })
+        return collection.in_collection;
+      });
     },
     getUserCollectionSize: state => {
       return state.usercollection.filter(collection => {
-        return collection.in_collection
+        return collection.in_collection;
       }).length;
+    },
+    collectionItemCreatedDate: state => {
+      return state.usercollection.map(date => {
+        return date.created_at.substring(0, 10);
+      });
     },
     getUserWantList: state => {
       return state.usercollection.filter(collection => {
-        return collection.in_wantlist
+        return collection.in_wantlist;
       });
     },
     getUserWantListSize: state => {
       return state.usercollection.filter(collection => {
-        return collection.in_wantlist
+        return collection.in_wantlist;
       }).length;
     },
-    timeOnWantList: state => {
-      return state.usercollection.map(date => {
-        return date.created_at.substring(0, 10)
-      })
+    wantItemCreatedDate: state => {
+      var firstEntry = state.usercollection.filter(item => {
+        if (item.in_wantlist === true) {
+          Math.min(item.created_at);
+        }
+        return firstEntry;
+      });
     }
-
   },
   mutations: {
     // State Setting mutations
@@ -72,13 +75,16 @@ export default new vuex.Store({
       state.newissues = newissues;
     },
     SET_COUNTRYLIST(state, countrylist) {
-        state.countrylist = countrylist
-      },
+      state.countrylist = countrylist;
+    },
     SET_REGIONLIST(state, regionlist) {
-        state.regionlist = regionlist;
+      state.regionlist = regionlist;
     },
     SET_COLLECTIONS(state, collections) {
       state.collections = collections;
+    },
+    ADD_TO_COLLECTION(state, payload) {
+      state.collections = [...collections, payload];
     },
     // State altering mutations
   },
@@ -132,7 +138,7 @@ export default new vuex.Store({
       axios
         .get("http://localhost:8000/users/collection/3")
         .then(data => {
-          let usercollection = data.data;          
+          let usercollection = data.data;
           commit("SET_USER_COLLECTION", usercollection);
         })
         .catch(error => {
@@ -151,15 +157,15 @@ export default new vuex.Store({
         });
     },
     loadCountryList({ commit }) {
-        axios
-            .get('http://localhost:8000/banknotes/countries')
-            .then(data => {
-                let countrylist = data.data;
-                commit("SET_COUNTRYLIST", countrylist);
-            })
-            .catch(error => {
-                console.log(error);
-            });
+      axios
+        .get("http://localhost:8000/banknotes/countries")
+        .then(data => {
+          let countrylist = data.data;
+          commit("SET_COUNTRYLIST", countrylist);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     loadRegionList({ commit }) {
       axios
@@ -183,8 +189,19 @@ export default new vuex.Store({
           console.log(error);
         });
     },
-    logout({commit}) {
-      localStorage.removeItem('user')
+    addToCollection({ commit }) {
+      axios
+        .get("http://localhost:8000/regions")
+        .then(data => {
+          let collections = data.JSON.stringify();
+          commit("SET_COLLECTIONS", collections);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    logout({ commit }) {
+      localStorage.removeItem("user");
     }
   }
 });
