@@ -36,12 +36,12 @@ export default {
     },
     countries() {
       return this.$store.state.countrylist
-    }
+    },
+ 
   },
   methods: {
-
-    handleChange: function(event) {
-      console.log(event);
+    handleChange: function($event) {
+      console.log(handleChange);
     }
   }
 };

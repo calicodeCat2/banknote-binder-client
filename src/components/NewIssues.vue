@@ -5,7 +5,7 @@
         <h1 class="subheading grey--text">New Issues for March 2019</h1>
         <v-container class="my-5">
             <v-layout row wrap>
-                <v-flex m6 lg3 v-for="(item, index) in newissues" :key="index">
+                <v-flex m6 lg3 v-for="(item, index) in newIssues" :key="index">
                     <v-card flat class="text-xs-center ma-3">
                         <v-responsive class="pt-4">
                             <v-img :src="item.img_url"></v-img>   
@@ -37,9 +37,9 @@ export default {
         this.$store.dispatch('loadNewIssues')
     },
     computed: {
-        ...mapState([
-            'newissues'
-        ])
+        newIssues() {
+            return this.$store.state.newissues
+        }
     }
 }
 </script>

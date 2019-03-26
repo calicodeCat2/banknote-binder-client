@@ -6,23 +6,19 @@ Vue.use(vuex, axios);
 
 export default new vuex.Store({
   state: {
+    user: {},
+    newuser: [],
     banknotes: [],
-    users: [],
-    newissues: [],
-    countrylist: [],
+    newbanknote: [],
+    usercollection: [],
+    newcollection: [],
+    newcollectionitme: [],
     regionlist: [],
-    usercollection: []
+    countrylist: [],
+    newcountry: [],
+    newissues: []
   },
   getters: {
-    allBanknotes: state => {
-      return state.banknotes;
-    },
-    allUsers: state => {
-      return state.users;
-    },
-    newIssues: state => {
-      return state.newissues;
-    },
     getUserCollection: state => {
       return state.usercollection.filter(collection => {
         return collection.in_collection;
@@ -62,8 +58,8 @@ export default new vuex.Store({
     SET_BANKNOTES(state, banknotes) {
       state.banknotes = banknotes;
     },
-    SET_USER(state, users) {
-      state.users = users;
+    SET_USER(state, user) {
+      state.user = user;
     },
     SET_USER_COLLECTION(state, usercollection) {
       state.usercollection = usercollection;
@@ -83,15 +79,15 @@ export default new vuex.Store({
     SET_COLLECTIONS(state, collections) {
       state.collections = collections;
     },
-    ADD_TO_COLLECTION(state, payload) {
-      state.collections = [...collections, payload];
-    },
     // State altering mutations
+    ADD_TO_COLLECTION(state, newcollectionitem) {
+      state.collections = [...collections, newcollectionitem];
+    }
   },
   actions: {
-    loginUser({ commit, dispatch }, user) {
+    loginUser({ commit, dispatch }, email) {
       axios
-        .get("http://localhost:8000/users/login${email}")
+        .post("http://localhost:8000/users/login", { email: email.email })
         .then(data => {
           let user = data.data;
           commit("SET_USER", user);
@@ -100,11 +96,11 @@ export default new vuex.Store({
           console.log(error);
         });
     },
-    registerUser({ commit, dispatch }, newUser) {
+    registerUser({ commit, dispatch }, newuser) {
       axios
-        .post("http://localhost:8000/users/adduser")
+        .post("http://localhost:8000/users/register", {newuser: newuser})
         .then(data => {
-          let newUser = data.JSON.stringify();
+          let newuser = data.JSON.stringify(newuser);
           commit("SET_NEWUSER", newUser);
         })
         .catch(error => {
@@ -136,7 +132,7 @@ export default new vuex.Store({
     },
     loadUserCollection({ commit }) {
       axios
-        .get("http://localhost:8000/users/collection/3")
+        .get("http://localhost:8000/users/collection/1")
         .then(data => {
           let usercollection = data.data;
           commit("SET_USER_COLLECTION", usercollection);
@@ -191,10 +187,10 @@ export default new vuex.Store({
     },
     addToCollection({ commit }) {
       axios
-        .get("http://localhost:8000/regions")
+        .get("http://localhost:8000/users/collections/addnote/${id}")
         .then(data => {
-          let collections = data.JSON.stringify();
-          commit("SET_COLLECTIONS", collections);
+          let newcollectionitem = data.JSON.stringify();
+          commit("ADD_TO_COLLECTION", newcollectionitem);
         })
         .catch(error => {
           console.log(error);
@@ -203,5 +199,5 @@ export default new vuex.Store({
     logout({ commit }) {
       localStorage.removeItem("user");
     }
-  }
+  },
 });

@@ -20,7 +20,7 @@
                 <div class="date">Date: {{item.issue_date}}</div>
               </v-card-text>
               <v-card-actions>
-                <v-btn v-on:click="addToCollection" flat color="blue">
+                <v-btn @click="addToCollection" flat color="blue">
                   <v-icon small left>star</v-icon>
                   <span>Add to Collection</span>
                 </v-btn>
@@ -34,11 +34,16 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import CombinedSelect from "../selects/CombinedSelect";
 export default {
   mounted() {
     this.$store.dispatch("loadBanknotes")
+  },
+  data() {
+    return {
+      newcollectionitem: []
+    }
   },
   computed: {
     banknotes () {
@@ -46,8 +51,11 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      'ADD_TO_COLLECTION'
+    ]),
     addToCollection: function() {
-
+      this.ADD_TO_COLLECTION(this.newcollectionitem)
     }
 
   },
