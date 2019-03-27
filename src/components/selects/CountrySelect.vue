@@ -6,7 +6,6 @@
           color="blue darken-4"
           class="form-control"
           v-model="selected"
-          @change="onChange($event)"
           label="Choose Country"
           :items="countrylist"
           item-text="name"
@@ -34,9 +33,6 @@ export default {
       return this.$store.state.countrylist;
     }
   },
-  handleChange: function(event) {
-    console.log(event);
-  }
 };
 </script>
 

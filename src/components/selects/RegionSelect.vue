@@ -6,7 +6,6 @@
           color="blue darken-4"
           class="form-control"
           v-model="selected"
-          @change="onChange($event)"
           label="Choose Region"
           :items="regions"
           item-text="region_name"
@@ -23,7 +22,6 @@ import { mapState } from "vuex";
 export default {
   mounted() {
     this.$store.dispatch("loadRegionList");
-    this.$store.dispatch("loadCountryList");
   },
   data() {
     return {
@@ -42,6 +40,9 @@ export default {
   methods: {
     handleChange: function($event) {
       console.log(handleChange);
+    },
+    hello() {
+      console.log('heard it')
     }
   }
 };

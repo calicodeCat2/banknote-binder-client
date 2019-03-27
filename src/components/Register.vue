@@ -11,11 +11,9 @@
             <v-text-field label="Email" v-model="email" required></v-text-field>
             <br>
             <v-text-field label="Password" type="password" v-model="password" required></v-text-field>
+            <v-btn dark class="blue darken-3" type="submit">Register</v-btn>
           </form>
           <br>
-          <div class="danger-alert" v-html="error"/>
-          <br>
-          <v-btn dark class="blue darken-3" type="submit">Register</v-btn>
         </panel>
       </v-flex>
     </v-layout>
@@ -44,8 +42,14 @@ export default {
   methods: {
     register: function() {
       const { first_name, last_name, email, password } = this;
-      this.$store.dispatch("register", { newuser }).then(() => {
-        this.$router.push("/dashboard");
+      let newuser = {
+        first_name,
+        last_name,
+        email,
+        password
+      }
+      this.$store.dispatch("registerUser", { newuser }).then(() => {
+        this.$router.push('/login');
       });
     }
   }

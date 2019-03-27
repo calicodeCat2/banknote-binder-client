@@ -5,12 +5,53 @@
       <v-layout row>
         <v-flex xs6>
           <v-card light flat>
-            <RegionSelect/>
+            <v-container fluid grid-list-xl>
+              <v-layout wrap justify-start>
+                <v-flex
+                  lg12
+                  lg6
+                  d-flex
+                  elevation-10
+                  color="blue lighten-4"
+                  class="align-content-right"
+                >
+                  <v-select
+                    color="blue darken-4"
+                    class="form-control"
+                    v-model:="selectRegion"
+                    @change="getSelected($event)"
+                    label="Choose Region"
+                    :items="regions"
+                    item-text="region_name"
+                    item-value="id"
+                    key="region.id"
+                  ></v-select>
+                {{regions.region_name}}
+                </v-flex>
+              </v-layout>
+            </v-container>
           </v-card>
         </v-flex>
         <v-flex xs6>
           <v-card light tile flat>
-            <CountrySelect align/>
+            <v-container fluid grid-list-xl>
+              <v-layout wrap justify-end>
+                <v-flex lg12 lg6 d-flex elevation-10 color="blue lighten-4">
+                  <v-select
+                    color="blue darken-4"
+                    class="form-control"
+                    v-model="selectedCountry"
+                    @change="onChange($event)"
+                    label="Choose Country"
+                    :items="countries"
+                    item-text="name"
+                    item-value="id"
+                    key="country.id" 
+                  ></v-select>
+                  {{countries.name}}
+                </v-flex>
+              </v-layout>
+            </v-container>
           </v-card>
         </v-flex>
       </v-layout>
@@ -33,28 +74,20 @@ export default {
     selectedRegion: "",
     selectedCountry: ""
   },
-  watch: {
-    selectedRegion: function() {
-      this.countries = [];
-      this.selectedCountry = "";
-
-      if (this.seletedRegion.length > 0) {
-        this.countrylist.reg_id = this.regionlist[this.selectedRegion];
-      }
-    }
-  },
   computed: {
     regions() {
       return this.$store.state.regionlist;
-      console.log(this.$store.state.regionlist);
     },
     countries() {
       return this.$store.state.countrylist;
     }
   },
   methods: {
-    handleChange: function() {
-      console.log("click, click");
+    getSelected(event) {
+      console.log("selected region: ", this.selected);
+    },
+    onChange(event) {
+      console.log('selected country', this.selectedCountry)
     }
   },
   components: {
