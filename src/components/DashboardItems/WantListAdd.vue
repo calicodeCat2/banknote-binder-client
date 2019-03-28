@@ -2,7 +2,7 @@
   <v-content>
     <v-container class="text-left">
       <h1>Add to Your Want List</h1>
-      <CombinedSelect />
+      <CombinedSelect/>
     </v-container>
     <div class="notes">
       <v-container class="my-5">
@@ -37,18 +37,40 @@
 import { mapState } from "vuex";
 import CombinedSelect from "../selects/CombinedSelect";
 export default {
-   mounted() {
+  mounted() {
     this.$store.dispatch("loadBanknotes");
   },
+  data() {
+    return {
+      user_id: this.user.id,
+      note_id: this.banknote.id,
+      in_collection: false,
+      in_wantlist: true
+    };
+  },
   computed: {
-    ...mapState(["banknotes"])
-  },   
-    components: {
-    CombinedSelect,
+    banknotes() {
+      return this.$store.state.banknotes;
+    }
+  },
+  methods: {
+    wantListAd: function() {
+      let newWantListNote = {
+        user_id,
+        note_id,
+        in_collection,
+        in_wantlist
+      };
+      this.$store.dispatch("addToWantList", { newWantListNote }).then(() => {
+        this.$router.push("dashboard");
+      });
+    }
+  },
+  components: {
+    CombinedSelect
   }
-}
+};
 </script>
 
 <style scoped>
-
 </style>

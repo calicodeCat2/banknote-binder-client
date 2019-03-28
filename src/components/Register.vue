@@ -34,11 +34,7 @@ export default {
       password: ""
     };
   },
-  computed: {
-    users() {
-      return this.$store.state.users;
-    }
-  },
+  computed: {},
   methods: {
     register: function() {
       const { first_name, last_name, email, password } = this;
@@ -47,9 +43,9 @@ export default {
         last_name,
         email,
         password
-      }
+      };
       this.$store.dispatch("registerUser", { newuser }).then(() => {
-        this.$router.push('/login');
+        this.$router.push("/login");
       });
     }
   }

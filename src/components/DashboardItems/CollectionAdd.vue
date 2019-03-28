@@ -20,7 +20,7 @@
                 <div class="date">Date: {{item.issue_date}}</div>
               </v-card-text>
               <v-card-actions>
-                <v-btn @click="addToCollection" flat color="blue">
+                <v-btn flat color="blue">
                   <v-icon small left>star</v-icon>
                   <span>Add to Collection</span>
                 </v-btn>
@@ -38,29 +38,39 @@ import { mapState, mapMutations } from "vuex";
 import CombinedSelect from "../selects/CombinedSelect";
 export default {
   mounted() {
-    this.$store.dispatch("loadBanknotes")
+    this.$store.dispatch("loadBanknotes");
   },
   data() {
     return {
-      newcollectionitem: []
-    }
+      user_id: this.user.id,
+      note_id: this.banknote.id,
+      in_collection: true,
+      in_wantlist: false
+    };
   },
   computed: {
-    banknotes () {
-      return this.$store.state.banknotes
+    banknotes() {
+      return this.$store.state.banknotes;
     }
   },
   methods: {
-    ...mapMutations([
-      'ADD_TO_COLLECTION'
-    ]),
-    addToCollection: function() {
-      this.ADD_TO_COLLECTION(this.newcollectionitem)
+    collectionAd: function() {
+      const { user_id, note_id, in_collection, in_wantlist } = this;
+      let newCollectionNote = {
+        user_id,
+        note_id,
+        in_collection,
+        in_wantlist
+      };
+      this.$store
+        .dispatch("addToCollection", { newCollectionNote })
+        .then(() => {
+          this.$router.push("dashboard");
+        });
     }
-
   },
   components: {
-    CombinedSelect,
+    CombinedSelect
   }
 };
 </script>

@@ -33,7 +33,7 @@ export default {
     },
     randomNotes () {
       let randomArray = []
-      for (let i = 0; i < 6; i++) {
+      for (let i = 0; i < 8; i++) {
        randomArray.push(this.banknotes[Math.floor(Math.random()*this.banknotes.length)]);
       }
       return randomArray

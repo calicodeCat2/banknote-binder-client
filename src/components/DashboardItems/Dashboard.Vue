@@ -10,7 +10,7 @@
           <v-container fill-height fluid>
             <v-layout fill-height>
               <v-flex xs12 align-end flexbox>
-                <span class="headline">My Collection</span>
+                <span class="display-3">My Collection</span>
               </v-flex>
             </v-layout>
           </v-container>
@@ -32,20 +32,13 @@
             </v-flex>
           </v-layout>
         </v-container>
-        <v-card-actions justify-center>
-          <v-btn
-            justify-start
-            dark
-            class="blue darken-3"
-            :to="{name: 'CollectionView'}"
-          >View Collection</v-btn>
-          <v-btn
-            justify-end
-            dark
-            class="blue darken-3"
-            :to="{name: 'CollectionAdd'}"
+        <v-container align-center>
+        <v-card-actions>
+          <v-btn dark class="blue darken-3" :to="{name: 'CollectionView'}">View Collection</v-btn>
+          <v-btn dark class="blue darken-3" :to="{name: 'CollectionAdd'}"
           >Add to Collection</v-btn>
         </v-card-actions>
+        </v-container>
       </v-card>
     </v-flex>
     <v-flex xs12 lg6>
@@ -58,14 +51,14 @@
           <v-container fill-height fluid>
             <v-layout fill-height>
               <v-flex xs12 align-end flexbox>
-                <span class="headline">My Want List</span>
+                <span class="display-3" size="30px">My Want List</span>
               </v-flex>
             </v-layout>
           </v-container>
         </v-img>
         <v-container grid-list-xl>
           <h3>Last three additions</h3>
-          <v-layout v-bind="binding">
+          <v-layout>
             <v-flex
               v-for="(item, index) in inWantlist.slice(inCollection.length -3, inCollection.length)"
               :key="index"
@@ -80,10 +73,8 @@
           </v-layout>
         </v-container>
         <v-container align-center>
-          <v-card-actions>
             <v-btn dark class="blue darken-3" :to="{name: 'WantListView'}">View Want List</v-btn>
             <v-btn dark class="blue darken-3" :to="{name: 'WantListAdd'}">Add to Want List</v-btn>
-          </v-card-actions>
         </v-container>
       </v-card>
     </v-flex>
@@ -93,16 +84,15 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 export default {
+  mounted() {
+    this.$store.commit("loadUserCollection", {id});
+  },
   data: () => ({
-    mounted() {
-      this.$store.dispatch("loadUserCollection");
-    }
+
   }),
   computed: {
-    // This provides me with the logged in user, but have not been able to pass id
-    // to getCollection Function so that user's collection can load.
-    user() {
-      return this.$store.state.user;
+    getUser() {
+      return this.$store.state.user
     },
     inCollection() {
       return this.$store.getters.getUserCollection;
@@ -112,13 +102,7 @@ export default {
     }
   },
   methods: {
-    // getCollection: function() {
-    //   let { id } = this.user.id;
-    //   console.log("dashboard id", id);
-    //   this.$store.dispatch("loadUserCollection", id).then(() => {
-    //     this.$router.push("/dashboard");
-    //   });
-    // }
+
   }
 };
 </script>
@@ -131,4 +115,5 @@ export default {
   border: 1px black solid;
   margin-left: 5px;
 }
+
 </style>

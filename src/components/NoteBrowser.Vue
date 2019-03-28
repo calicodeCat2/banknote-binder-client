@@ -7,7 +7,7 @@
     <div class="notes">
       <v-container class="my-5">
         <v-layout row wrap>
-          <v-flex m6 lg3 v-for="(item, index) in banknotes" :key="index">
+          <v-flex m6 lg3 v-for="(item, index) in select" :key="index">
             <v-card flat class="text-xs-center ma-3">
               <v-responsive class="pt-4">
                 <v-img :src="item.img_url"></v-img>
@@ -34,9 +34,8 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import CombinedSelect from "./selects/CombinedSelect";
-import RegionSelect from "./selects/RegionSelect";
 export default {
   mounted() {
     this.$store.dispatch("loadBanknotes");
@@ -50,6 +49,9 @@ export default {
     },
     banknotes() {
       return this.$store.state.banknotes;
+    },
+    select() {
+      return this.$store.getters.selectNotes
     }
   },
   components: {

@@ -18,15 +18,14 @@
                   <v-select
                     color="blue darken-4"
                     class="form-control"
-                    v-model:="selectedRegion"
-                    @change="getSelected($event)"
+                    v-model="selectedRegion"
+                    @change="($event)"
                     label="Choose Region"
                     :items="regions"
                     item-text="region_name"
                     item-value="id"
                     key="id"
                   ></v-select>
-                {{}}
                 </v-flex>
               </v-layout>
             </v-container>
@@ -43,12 +42,11 @@
                     v-model="selectedCountry"
                     @change="onChange($event)"
                     label="Choose Country"
-                    :items="countries"
+                    :items="filteredCountries"
                     item-text="name"
                     item-value="id"
-                    key="id" 
+                    key="id"
                   ></v-select>
-                  {{}}
                 </v-flex>
               </v-layout>
             </v-container>
@@ -61,16 +59,18 @@
 
 <script>
 import { mapState } from "vuex";
-import CountrySelect from "./CountrySelect";
-import RegionSelect from "./RegionSelect";
+
 export default {
   mounted() {
     this.$store.dispatch("loadRegionList");
     this.$store.dispatch("loadCountryList");
+    this.$store.dispatch("loadBanknotes");
   },
-  data: {
-    selectedRegion: "",
-    selectedCountry: ""
+  data: function() {
+    return {
+      selectedRegion: "",
+      selectedCountry: ""
+    };
   },
   computed: {
     regions() {
@@ -78,28 +78,23 @@ export default {
     },
     countries() {
       return this.$store.state.countrylist;
-    }
-  },
-
-  /*  Need to return regions.id and countries.reg_id from select to
-      to set condition when region is selected, country select populates with
-      countries from that region. Also need to show: CHOOSE REGION FIRST, then
-      show CHOOSE COUNTRY once region is selected
-  */
-  methods: {
-    getSelected(event) {
-      console.log("selected region: ", this.selectedRegion);
-      // currently delivers Undefined for country
     },
-    onChange(event) {
-      console.log('selected country', this.selectedCountry)
-      // can only deliver countries.id of countries.name
+    banknotes() {
+      return this.$store.state.banknotes;
+    },
+    filteredCountries() {
+      return this.countries.filter(
+        country => country.reg_id == this.selectedRegion
+      );
+    },
+    filteredNotes() {
+      return this.banknotes.filter(
+        banknote => banknote.ctry_id == this.selectedCountry
+      );
     }
   },
-  components: {
-    CountrySelect,
-    RegionSelect
-  }
+  methods: {},
+  components: {}
 };
 </script>
 
