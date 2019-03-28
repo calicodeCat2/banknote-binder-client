@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <v-container class="text-left">
-      <h3>Seach by Region or Country</h3>
+      <h2>Seach by Region then Country</h2>
       <v-layout row>
         <v-flex xs6>
           <v-card light flat>
@@ -18,15 +18,15 @@
                   <v-select
                     color="blue darken-4"
                     class="form-control"
-                    v-model:="selectRegion"
+                    v-model:="selectedRegion"
                     @change="getSelected($event)"
                     label="Choose Region"
                     :items="regions"
                     item-text="region_name"
                     item-value="id"
-                    key="region.id"
+                    key="id"
                   ></v-select>
-                {{regions.region_name}}
+                {{}}
                 </v-flex>
               </v-layout>
             </v-container>
@@ -46,9 +46,9 @@
                     :items="countries"
                     item-text="name"
                     item-value="id"
-                    key="country.id" 
+                    key="id" 
                   ></v-select>
-                  {{countries.name}}
+                  {{}}
                 </v-flex>
               </v-layout>
             </v-container>
@@ -69,8 +69,6 @@ export default {
     this.$store.dispatch("loadCountryList");
   },
   data: {
-    regions: [],
-    countries: [],
     selectedRegion: "",
     selectedCountry: ""
   },
@@ -82,12 +80,20 @@ export default {
       return this.$store.state.countrylist;
     }
   },
+
+  /*  Need to return regions.id and countries.reg_id from select to
+      to set condition when region is selected, country select populates with
+      countries from that region. Also need to show: CHOOSE REGION FIRST, then
+      show CHOOSE COUNTRY once region is selected
+  */
   methods: {
     getSelected(event) {
-      console.log("selected region: ", this.selected);
+      console.log("selected region: ", this.selectedRegion);
+      // currently delivers Undefined for country
     },
     onChange(event) {
       console.log('selected country', this.selectedCountry)
+      // can only deliver countries.id of countries.name
     }
   },
   components: {

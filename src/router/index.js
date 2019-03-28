@@ -12,7 +12,7 @@ import RegionSelect from "@/components/selects/RegionSelect"
 import CombinedSelect from "@/components/selects/CombinedSelect"
 import ForumMain from "@/components/ForumMain";
 import Test from "@/components/Test";
-import Dashboard from "@/components/Dashboard";
+import Dashboard from "@/components/DashboardItems/Dashboard";
 import CollectionStats from "@/components/DashboardItems/CollectionStats";
 import CollectionView from "@/components/DashboardItems/CollectionView";
 import CollectionAdd from "@/components/DashboardItems/CollectionAdd";
