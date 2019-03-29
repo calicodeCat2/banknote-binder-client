@@ -16,7 +16,7 @@ import CollectionView from "@/components/DashboardItems/CollectionView";
 import CollectionAdd from "@/components/DashboardItems/CollectionAdd";
 import WantListView from "@/components/DashboardItems/WantListView";
 import WantListAdd from "@/components/DashboardItems/WantListAdd";
-
+import AddNewNote from "@/components/DashboardItems/AddNewNote";
 
 
 Vue.use(Router);
@@ -104,19 +104,10 @@ export default new Router({
       name: "WantListAdd",
       component: WantListAdd
     },
-    
+    {
+      path: "/addnew",
+      name: "AddNewNote",
+      component: AddNewNote
+    },
   ]
 });
-
-// rediredct to loing page if not ogged in and trying to access a restircted page
-// Router.beforeEach((to, from, next) => {
-//   const publicPages = ['/', '/login', '/register', '/about', '/browse', '/newissues'];
-//   const authRequired = !publicPages.includes(to.path);
-//   const loggedIn = localStorage.getItem('user');
-
-//   if (authRequired && !loggedIn) {
-//     return next('/login')
-//   }
-
-//   next();
-// })

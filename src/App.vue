@@ -2,7 +2,6 @@
   <v-app>
     <v-content>
       <Header />
-      <Test />
     <router-view/>
     </v-content>
 `
@@ -11,12 +10,10 @@
 
 <script>
 import Header from '@/components/Header'
-import Test from '@/components/Test'
 export default {
   name: 'App',
   components: {
-    Header,
-    Test
+    Header
   },
 }
 </script>

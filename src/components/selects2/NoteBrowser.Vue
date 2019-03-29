@@ -67,14 +67,14 @@
               <div class="denomination">Denomination: {{item.denomination}} {{item.currency}}</div>
               <div class="date">Date: {{item.issue_date}}</div>
             </v-card-text>
-            <v-card-actions v-if="$route.name == 'CollectionAdd' ">
-              <v-btn flat color="blue" @click="addNote(item)">
+            <v-card-actions v-if="true">
+              <v-btn flat color="blue">
                 <v-icon small left>star</v-icon>
                 <span>Add to Collection</span>
               </v-btn>
             </v-card-actions>
-            <v-card-actions v-if="$route.name == 'WantListAdd' ">
-              <v-btn flat color="blue" @click="addWant(item)">
+            <v-card-actions v-if="true">
+              <v-btn flat color="blue">
                 <v-icon small left>star</v-icon>
                 <span>Add to Want List</span>
               </v-btn>
@@ -83,36 +83,15 @@
         </v-flex>
       </v-layout>
     </v-container>
-        <container class="row top-button">
-          <v-btn class="color primary" 
-          v-if="selectedCountry"
-          :to="{name: 'AddNewNote'}"
-          >Add Other Note</v-btn>
-        </container>
   </v-content>
 </template>
 
 <script>
 import { mapState, mapGetters } from "vuex";
-
+import CombinedSelect from "./selects/CombinedSelect";
 export default {
   mounted() {
-    this.$store.dispatch("loadRegionList");
-    this.$store.dispatch("loadCountryList");
     this.$store.dispatch("loadBanknotes");
-    this.$store.dispatch("loadCollection");
-    console.log('select', this);
-    
-  },
-  data: function() {
-    return {
-      selectedRegion: "",
-      selectedCountry: "",
-      user_id: "",
-      note_id: "",
-      in_collection: "",
-      in_wantlist: ""
-    };
   },
   computed: {
     regions() {
@@ -121,71 +100,19 @@ export default {
     countries() {
       return this.$store.state.countrylist;
     },
-    banknotes() {      
+    banknotes() {
       return this.$store.state.banknotes;
     },
-    inCollection() {
-      return this.$store.getters.getUserCollection;
-    },
-    inWantlist() {
-      return this.$store.getters.getUserWantList;
-    },
-    filteredCountries() {
-      return this.countries.filter(
-        country => country.reg_id == this.selectedRegion
-      );
-    },
-    filteredNotes() {
-      return this.banknotes.filter(
-        banknote => banknote.ctry_id == this.selectedCountry
-      );
-    },
-    collectionFilter() {
-      console.log('filteredNotes', this.filteredNotes);
-      console.log('inWantList', this.inWantList);
-      
-      return this.inCollection.filter(
-        collection => collection.note_id = this.filteredNotes.banknote_id
-      )
+    select() {
+      return this.$store.getters.selectNotes
     }
   },
-  methods: {
-    addItem(item) {
-      this.noteToAdd = item;
-    },
-    addWant(item) {
-      this.noteToAdd = item;
-    },
-    collectionAd: function() {
-      const { user_id, note_id, in_collection, in_wantlist } = this;
-      let newCollectionNote = {
-        user_id,
-        note_id,
-        in_collection,
-        in_wantlist
-      };
-      this.$store
-        .dispatch("addToCollection", { newCollectionNote })
-        .then(() => {
-          this.$router.push("dashboard");
-        });
-    },
-    wantListAd: function() {
-      let newWantListNote = {
-        user_id,
-        note_id,
-        in_collection,
-        in_wantlist
-      };
-      this.$store.dispatch("addToWantList", { newWantListNote }).then(() => {
-        this.$router.push("dashboard");
-      });
-    }
-  },
-  components: {}
+  components: {
+    CombinedSelect
+  }
 };
 </script>
 
+
 <style scoped>
 </style>
-

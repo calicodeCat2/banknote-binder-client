@@ -1,27 +1,21 @@
 <template>
   <v-layout>
     <v-container class="text-left">
-    <h1>View Want List</h1>
+      <h1>View Want List</h1>
       <v-layout row>
         <v-flex xs6>
           <v-card light flat>
-            <v-card-text class="total">
-              Total Notes on Want List: {{totalWantList}}
-            </v-card-text>
+            <v-card-text class="total">Total Notes on Want List: {{totalWantList}}</v-card-text>
           </v-card>
         </v-flex>
         <v-flex xs6>
           <v-card light tile flat>
-            <v-card-text class="first">
-              On Want List Longest: {{firstEntry}}
-            </v-card-text>
+            <v-card-text class="first">On Want List Longest: {{}}</v-card-text>
           </v-card>
         </v-flex>
         <v-flex xs6>
           <v-card light tile flat>
-            <v-card-text class="recent">
-              Most Recent Want List Addition:
-            </v-card-text>
+            <v-card-text class="recent">Most Recent Want List Addition:</v-card-text>
           </v-card>
         </v-flex>
       </v-layout>
@@ -65,15 +59,9 @@ export default {
     totalWantList() {
       return this.$store.getters.getUserWantListSize;
     },
-    firstEntry() {
-      return this.$store.getters.wantItemCreatedDate
-    },
-  },
-  methods: {
-    firstEntry() {
-      Math.min(...timeOnList)
+    longestOnList() {
+      return this.$store.getters.getUserWantList.shift();
     }
-
   }
 };
 </script>

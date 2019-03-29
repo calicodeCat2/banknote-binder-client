@@ -15,22 +15,18 @@ export default new vuex.Store({
     regionlist: [],
     countrylist: [],
     newissues: [],
-    newcollectionitem: [],
-    // isLoggedIn: !!localStorage.getItem(user)
+    newcollectionitem: []
   },
   getters: {
     allNotes: state => {
       return state.banknotes.map(banknote => {
-        return banknote
-      })
+        return banknote;
+      });
     },
     selectNotes: state => {
       return state.selectedBanknotes.map(selectedBanknote => {
-        return selectedBanknote.ctry_id
-      })
-    },
-    isLoggedIn: state => {
-      return (status = state.isLoggedIn);
+        return selectedBanknote.ctry_id;
+      });
     },
     getUserCollection: state => {
       return state.usercollection.filter(collection => {
@@ -63,15 +59,15 @@ export default new vuex.Store({
     SET_BANKNOTES(state, banknotes) {
       state.banknotes = banknotes;
     },
-    SET_SELECT_RETURN (state, onChange) {
+    SET_SELECT_RETURN(state) {
       state.selectedBanknotes = selectedBanknotes;
+    },
+    SET_COLLECTION(state, usercollection) {
+       state.usercollection = usercollection
     },
     SET_USER(state, user) {
       state.user = user;
       localStorage.setItem("user", JSON.stringify(state.user));
-    },
-    SET_USER_COLLECTION(state) {
-      state.usercollection = usercollection;
     },
     SET_NEWUSER(state, users) {
       state.users = users;
@@ -94,10 +90,10 @@ export default new vuex.Store({
     },
     ADD_TO_WANTLIST(state, newcollectionitem) {
       state.collections = [...collections, newcollectionitem];
-    },
+    }
   },
   actions: {
-    loginUser({ dispatch, commit }, email) {
+    loginUser({ commit }, email) {
       axios
         .post("http://localhost:8000/users/login", { email: email.email })
         .then(data => {
@@ -135,7 +131,6 @@ export default new vuex.Store({
       axios
         .get("http://localhost:8000/users")
         .then(data => {
-          console.log(data);
           let users = data.data;
           commit("SET_USERS", users);
         })
@@ -143,13 +138,16 @@ export default new vuex.Store({
           console.log(error);
         });
     },
-    loadUserCollection({ commit }, id) {
+    loadCollection({ commit }, id) {
+      let userInfo = JSON.parse(localStorage.getItem('user'))
+      console.log('userinfo', userInfo);
+      
       axios
-        .get(`http://localhost:8000/users/collection/1`)
+        .get(`http://localhost:8000/users/collection/${userInfo.id}`)
         .then(data => {
+          console.log(data);
           let usercollection = data.data;
-          console.log('label', usercollection);
-          commit("SET_USER_COLLECTION", usercollection);
+          commit("SET_COLLECTION", usercollection);
         })
         .catch(error => {
           console.log(error);
@@ -210,7 +208,7 @@ export default new vuex.Store({
           console.log(error);
         });
     },
-  // Logout function clears storage and resets user state, but does not push to /login as defined in Method on Header.vue
+    // Logout function clears storage and resets user state, but does not push to /login as defined in Method on Header.vue
     logout({ commit }) {
       localStorage.removeItem("user");
       // state.user = {}

@@ -5,17 +5,18 @@
       <v-layout row>
         <v-flex xs6>
           <v-card light flat>
-            <v-card-text class="total">Total Notes on Want List: {{totalCollection}}</v-card-text>
+            <v-card-text class="total">Total Notes in Collection: {{totalCollection}}</v-card-text>
           </v-card>
         </v-flex>
         <v-flex xs6>
           <v-card light tile flat>
-            <v-card-text class="first">On Want List Longest:</v-card-text>
+            <v-card-text class="first">Most Recent Addition:
+            </v-card-text>
           </v-card>
         </v-flex>
         <v-flex xs6>
           <v-card light tile flat>
-            <v-card-text class="recent">Most Recent Want List Addition:</v-card-text>
+            <v-card-text class="recent">Estimated Value of Collection: </v-card-text>
           </v-card>
         </v-flex>
       </v-layout>
@@ -31,7 +32,7 @@
               <div class="calatog">Catalog #: {{item.catalog_no}}</div>
               <div class="denomination">Denomination: {{item.denomination}} {{item.currency}}</div>
               <div class="date">Date: {{item.issue_date}}</div>
-              <div>Total: {{totalCollection}}</div>
+              <div>Date Added to Collection: </div>
             </v-card-text>
           </v-card>
         </v-flex>
@@ -44,7 +45,7 @@
 import { mapState } from "vuex";
 export default {
   mounted() {
-    this.$store.dispatch("loadUserCollection");
+    this.$store.dispatch("loadCollection");
   },
   computed: {
     inCollection() {
@@ -55,6 +56,11 @@ export default {
     },
     totalCollection() {
       return this.$store.getters.getUserCollectionSize;
+    },
+    mostRecentAddition() {
+      console.log(this.$store.getters.getUserCollection.pop())
+      
+      return this.$store.getters.getUserCollection.pop()
     }
   }
 };

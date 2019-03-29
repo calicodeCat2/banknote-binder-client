@@ -12,9 +12,10 @@
     </v-toolbar-items>
     <v-spacer></v-spacer>
     <v-toolbar-items>
-      <v-btn class="mt-4"  flat dark :to="{name: 'login'}">Login</v-btn>
-      <v-btn class="mt-4"  flat dark :to="{name: 'register'}">Sign Up</v-btn>
-      <v-btn class="mt-4"  flat dark @click="logout" type="logout">Log Out</v-btn>
+      <v-btn v-if="!isLoggedIn" class="mt-4"  flat dark :to="{name: 'login'}">Login</v-btn>
+      <v-btn v-if="!isLoggedIn" class="mt-4"  flat dark :to="{name: 'register'}">Sign Up</v-btn>
+      <v-btn v-if="isLoggedIn" class="mt-4"  flat dark :to="{name: 'dashboard'}">Dashboard</v-btn>
+      <v-btn v-if="isLoggedIn" class="mt-4"  flat dark @click="logout" type="logout">Log Out</v-btn>
     </v-toolbar-items>
   </v-toolbar>
   </v-container>
@@ -23,6 +24,13 @@
 
 <script>
 export default {
+  computed: {
+    isLoggedIn() {
+  
+    return !!localStorage.getItem('user')
+
+    }
+  },
   methods: {
     logout: function() {
       this.$store.dispatch("logout").then(() => {
