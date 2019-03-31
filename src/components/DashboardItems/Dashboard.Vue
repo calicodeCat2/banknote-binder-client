@@ -18,25 +18,19 @@
         <v-container grid-list-xl>
           <h3>Last three additions</h3>
           <v-layout>
-            <v-flex
-              light
-              v-for="(item, index) in inCollection.slice(inCollection.length -3, inCollection.length)"
-              :key="index"
-            >
+            <v-flex light v-for="(item, index) in inCollection.slice(inCollection.length - 3, inCollection.length)" :key="index">
               <v-card>
                 <v-img :src="item.img_url"></v-img>
-                <v-card-text class="pa-1" >{{item.name}}</v-card-text>
-                <v-card-text class="pa-1" >{{item.denomination}} {{item.currency}}</v-card-text>
-                <v-card-text class="pa-1" >Date: {{item.issue_date}}</v-card-text>
-                <v-card-text class="pa-1" >Grade: {{item.grade}}</v-card-text>
-                <v-card-text class="pa-1" >Added to Want List:</v-card-text>
-                <v-card-text class="pa-1" >{{item.created_at.substring(0, 10)}}</v-card-text>
+                <v-card-text class="pa-1">{{item.name}}</v-card-text>
+                <v-card-text class="pa-1">{{item.denomination}} {{item.currency}}</v-card-text>
+                <v-card-text class="pa-1">Date: {{item.issue_date}}</v-card-text>
+                <v-card-text class="pa-1">Grade: {{item.grade}}</v-card-text>
               </v-card>
             </v-flex>
           </v-layout>
         </v-container>
         <v-container align-center>
-          <v-card-actions>
+          <v-card-actions class="justify-center">
             <v-btn dark class="blue darken-3" :to="{name: 'CollectionView'}">View Collection</v-btn>
             <v-btn dark class="blue darken-3" :to="{name: 'CollectionAdd'}">Add to Collection</v-btn>
           </v-card-actions>
@@ -67,16 +61,14 @@
             >
               <v-card light>
                 <v-img :src="item.img_url"></v-img>
-                <v-card-text class="pa-1" >{{item.name}}</v-card-text>
-                <v-card-text class="pa-1" >{{item.denomination}} {{item.currency}}</v-card-text>
-                <v-card-text class="pa-1" >Date: {{item.issue_date}}</v-card-text>
-                <v-card-text class="pa-1" >Added to Want List:</v-card-text>
-                <v-card-text class="pa-1" >{{item.created_at.substring(0, 10)}}</v-card-text>
+                <v-card-text class="pa-1">{{item.name}}</v-card-text>
+                <v-card-text class="pa-1">{{item.denomination}} {{item.currency}}</v-card-text>
+                <v-card-text class="pa-1">Date: {{item.issue_date}}</v-card-text>
               </v-card>
             </v-flex>
           </v-layout>
         </v-container>
-        <v-container align-center>
+        <v-container class="justify-center">
           <v-btn dark class="blue darken-3" :to="{name: 'WantListView'}">View Want List</v-btn>
           <v-btn dark class="blue darken-3" :to="{name: 'WantListAdd'}">Add to Want List</v-btn>
         </v-container>
@@ -88,22 +80,20 @@
 import { mapState, mapGetters } from "vuex";
 export default {
   mounted() {
-    return this.$store.dispatch("loadCollection");
+    this.$store.dispatch("loadCollection");
+    console.log("select", this);
   },
-  data: () => ({
-  }),
-   
   computed: {
     inCollection() {
-      return this.$store.getters.getUserCollection;
+      return this.$store.getters.getUserCollection.map(collection => {
+        return collection;
+      });
     },
     inWantlist() {
       return this.$store.getters.getUserWantList;
     }
   },
-  methods: {
- 
-  }
+  methods: {}
 };
 </script>
 <style>
@@ -115,5 +105,4 @@ export default {
   border: 1px black solid;
   margin-left: 5px;
 }
-
 </style>

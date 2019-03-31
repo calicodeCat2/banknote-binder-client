@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "@/components/Home";
+import Home2 from "@/components/Home2";
 import About from "@/components/About";
 import Register from "@/components/Register";
 import Login from "@/components/Login";
@@ -16,7 +17,7 @@ import CollectionView from "@/components/DashboardItems/CollectionView";
 import CollectionAdd from "@/components/DashboardItems/CollectionAdd";
 import WantListView from "@/components/DashboardItems/WantListView";
 import WantListAdd from "@/components/DashboardItems/WantListAdd";
-import AddNewNote from "@/components/DashboardItems/AddNewNote";
+// import AddNewNote from "@/components/DashboardItems/AddNewNote";
 
 
 Vue.use(Router);
@@ -105,9 +106,15 @@ export default new Router({
       component: WantListAdd
     },
     {
-      path: "/addnew",
-      name: "AddNewNote",
-      component: AddNewNote
+      path: "/home2",
+      name: "Home2",
+      component: Home2
     },
+    // {
+    //   path: "/addnewnote",
+    //   name: "AddNewNote",
+    //   component: AddNewNote
+    // },
+
   ]
 });

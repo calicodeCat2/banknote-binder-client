@@ -56,9 +56,9 @@
     <v-container class="my-5">
       <v-layout row wrap>
         <v-flex m6 lg3 v-for="(item, index) in filteredNotes" :key="index">
-          <v-card flat class="text-xs-center ma-3">
+          <v-card flat class="text-xs-center ma-3 elevation-5">
             <v-responsive class="pt-4">
-              <v-img :src="item.img_url"></v-img>
+              <v-img class="ml-4" :src="item.img_url" max-width="200px"></v-img>
             </v-responsive>
             <v-card-text>
               <div class="region">Region: {{item.region_name}}</div>
@@ -67,28 +67,34 @@
               <div class="denomination">Denomination: {{item.denomination}} {{item.currency}}</div>
               <div class="date">Date: {{item.issue_date}}</div>
             </v-card-text>
-            <v-card-actions v-if="$route.name == 'CollectionAdd' ">
+            <v-select
+              class="row ml-3 mr-3"
+              v-if="$route.name == 'CollectionAdd' "
+              v-model="selectedGrade"
+              v-validate="'required'"
+              :items="grade"
+              label="Select Grade"
+              data-vv-name="select"
+              required
+              max-width="250px"
+            ></v-select>
+            <v-card-actions class="row" v-if="$route.name == 'CollectionAdd' ">
               <v-btn flat color="blue" @click="addNote(item)">
                 <v-icon small left>star</v-icon>
                 <span>Add to Collection</span>
               </v-btn>
             </v-card-actions>
             <v-card-actions v-if="$route.name == 'WantListAdd' ">
-              <v-btn flat color="blue" @click="addWant(item)">
+              <v-btn flat color="blue" @click="addWant(this.user_id)">
                 <v-icon small left>star</v-icon>
                 <span>Add to Want List</span>
               </v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
+        {{ collection }}
       </v-layout>
     </v-container>
-        <container class="row top-button">
-          <v-btn class="color primary" 
-          v-if="selectedCountry"
-          :to="{name: 'AddNewNote'}"
-          >Add Other Note</v-btn>
-        </container>
   </v-content>
 </template>
 
@@ -101,34 +107,45 @@ export default {
     this.$store.dispatch("loadCountryList");
     this.$store.dispatch("loadBanknotes");
     this.$store.dispatch("loadCollection");
-    console.log('select', this);
-    
+    console.log("user", this.inCollection.id);
   },
   data: function() {
     return {
+      collection: [],
       selectedRegion: "",
       selectedCountry: "",
       user_id: "",
       note_id: "",
       in_collection: "",
-      in_wantlist: ""
+      in_wantlist: "",
+      grade: ""
     };
   },
   computed: {
+    grade() {
+      const noteGrades = [];
+      const grades = ["UNC", "AU", "EF", "VF", "F", "VG", "G", "Fair", "P"];
+      for (let i = 0; i < grades.length; i++) {
+        noteGrades.push(grades[i]);
+      }
+      return noteGrades;
+    },
     regions() {
       return this.$store.state.regionlist;
     },
     countries() {
       return this.$store.state.countrylist;
     },
-    banknotes() {      
+    banknotes() {
       return this.$store.state.banknotes;
     },
     inCollection() {
       return this.$store.getters.getUserCollection;
     },
     inWantlist() {
-      return this.$store.getters.getUserWantList;
+      return this.$store.getters.getUserWantList.map(
+        wantlist => wantlist.note_id
+      );
     },
     filteredCountries() {
       return this.countries.filter(
@@ -141,28 +158,32 @@ export default {
       );
     },
     collectionFilter() {
-      console.log('filteredNotes', this.filteredNotes);
-      console.log('inWantList', this.inWantList);
-      
-      return this.inCollection.filter(
-        collection => collection.note_id = this.filteredNotes.banknote_id
-      )
+      return this.filteredNotes.filter(
+        filtered => filtered.banknote_id == this.inCollection.note_id
+      );
+    },
+    wantlistFilter() {
+      return this.inWantList.filter(
+        wantlist => wantlist.note_id == this.filteredNotes.banknote_id
+      );
     }
   },
   methods: {
-    addItem(item) {
-      this.noteToAdd = item;
+    addNote(item) {
+      this.collection.push({
+        note_id: item.banknote_id,
+        user_id: this.user_id,
+        grade: item.grade
+      });
     },
     addWant(item) {
-      this.noteToAdd = item;
+      const { user_id, note_id } = this.item;
     },
     collectionAd: function() {
-      const { user_id, note_id, in_collection, in_wantlist } = this;
+      const { user_id, note_id } = this;
       let newCollectionNote = {
         user_id,
-        note_id,
-        in_collection,
-        in_wantlist
+        note_id
       };
       this.$store
         .dispatch("addToCollection", { newCollectionNote })
@@ -173,9 +194,7 @@ export default {
     wantListAd: function() {
       let newWantListNote = {
         user_id,
-        note_id,
-        in_collection,
-        in_wantlist
+        note_id
       };
       this.$store.dispatch("addToWantList", { newWantListNote }).then(() => {
         this.$router.push("dashboard");

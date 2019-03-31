@@ -1,26 +1,44 @@
+
 <template>
-  <v-content>
-    <h1>Welcome</h1>
-    <v-container class="my-5">
-      <v-layout row wrap>
-        <v-flex m6 lg3
-          v-for="(item, index) in randomNotes" :key="index"
-        >
-          <v-card flat class="text-xs-center ma-3">
-            <v-responsive class="pt-4">
-              <v-img :src="item.img_url"></v-img>
-              <v-card-text>
-                <div class="country">Country: {{item.name}} </div>
-                <div class="denomination">Denomination: {{item.denomination}} {{item.currency}}</div>
-                <div class="denomination">Date: {{item.issue_date}}</div>
-              </v-card-text>
-            </v-responsive>
-          </v-card>
-        </v-flex>
-      </v-layout>
+  <v-layout>
+    <v-container class="row">
+    <v-flex lg12>
+      <v-card class="elevation-5">
+        <v-container grid-list-sm fluid>
+          <v-layout row wrap>
+            <v-flex
+              v-for="(item, index) in randomNotes" :key="index"
+              xs4
+              d-flex
+            >
+              <v-card flat tile class="d-flex">
+                <v-img
+                  :src="item.img_url"
+                  :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+                  aspect-ratio="1"
+                  class="grey lighten-2"
+                >
+                  <template v-slot:placeholder>
+                    <v-layout
+                      fill-height
+                      align-center
+                      justify-center
+                      ma-0
+                    >
+                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                    </v-layout>
+                  </template>
+                </v-img>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-card>
+    </v-flex>
     </v-container>
-  </v-content>
+  </v-layout>
 </template>
+
 <script>
 import { mapGetters } from "vuex";
 export default {
@@ -33,7 +51,7 @@ export default {
     },
     randomNotes () {
       let randomArray = []
-      for (let i = 0; i < 8; i++) {
+      for (let i = 0; i < 9; i++) {
        randomArray.push(this.banknotes[Math.floor(Math.random()*this.banknotes.length)]);
       }
       return randomArray

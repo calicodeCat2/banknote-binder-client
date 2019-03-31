@@ -4,26 +4,26 @@
       <h1>View Want List</h1>
       <v-layout row>
         <v-flex xs6>
-          <v-card light flat>
+          <v-card class="elevation-5 ma-2" light flat>
             <v-card-text class="total">Total Notes on Want List: {{totalWantList}}</v-card-text>
           </v-card>
         </v-flex>
         <v-flex xs6>
-          <v-card light tile flat>
+          <v-card class="elevation-5 ma-2" light tile flat>
             <v-card-text class="first">On Want List Longest: {{}}</v-card-text>
           </v-card>
         </v-flex>
         <v-flex xs6>
-          <v-card light tile flat>
+          <v-card class="elevation-5 ma-2" light tile flat>
             <v-card-text class="recent">Most Recent Want List Addition:</v-card-text>
           </v-card>
         </v-flex>
       </v-layout>
       <v-layout row wrap>
         <v-flex m6 lg3 v-for="(item, index) in inWantList" :key="index">
-          <v-card flat class="text-xs-center ma-3">
+          <v-card flat class="text-xs-center ma-3 elevation-5">
             <v-responsive class="pt-4">
-              <v-img :src="item.img_url"></v-img>
+              <v-img class="ml-4" :src="item.img_url" max-width="200px"></v-img>
             </v-responsive>
             <v-card-text>
               <div class="region">Region: {{item.region_name}}</div>

@@ -140,13 +140,11 @@ export default new vuex.Store({
     },
     loadCollection({ commit }, id) {
       let userInfo = JSON.parse(localStorage.getItem('user'))
-      console.log('userinfo', userInfo);
-      
       axios
         .get(`http://localhost:8000/users/collection/${userInfo.id}`)
         .then(data => {
-          console.log(data);
           let usercollection = data.data;
+          console.log(usercollection);
           commit("SET_COLLECTION", usercollection);
         })
         .catch(error => {

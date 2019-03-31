@@ -14,32 +14,13 @@ export default {
   mounted() {
     this.$store.dispatch("loadBanknotes");
   },
-  data() {
-    return {
-      user_id: "",
-      note_id: "",
-      in_collection: "",
-      in_wantlist: true
-    };
-  },
+ 
   computed: {
     banknotes() {
       return this.$store.state.banknotes;
     }
   },
-  methods: {
-    wantListAd: function() {
-      let newWantListNote = {
-        user_id,
-        note_id,
-        in_collection,
-        in_wantlist
-      };
-      this.$store.dispatch("addToWantList", { newWantListNote }).then(() => {
-        this.$router.push("dashboard");
-      });
-    }
-  },
+  methods: {},
   components: {
     CombinedSelect
   }
