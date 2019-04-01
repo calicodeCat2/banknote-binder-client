@@ -105,7 +105,6 @@ export default new vuex.Store({
         });
     },
     registerUser({ commit }, newuser) {
-      console.log("heard in action", newuser);
       axios
         .post("http://localhost:8000/users/register", newuser)
         .then(data => {
@@ -144,7 +143,6 @@ export default new vuex.Store({
         .get(`http://localhost:8000/users/collection/${userInfo.id}`)
         .then(data => {
           let usercollection = data.data;
-          console.log(usercollection);
           commit("SET_COLLECTION", usercollection);
         })
         .catch(error => {
@@ -184,24 +182,32 @@ export default new vuex.Store({
           console.log(error);
         });
     },
-    addToCollection({ commit }) {
+    addToCollection({ commit }, newcollectionitem) {
       axios
-        .get(`http://localhost:8000/users/collections/addnote/`)
+      .post(`http://localhost:8000/users/collections/addnote`, newcollectionitem)
+      .then(data => {
+        let newcollectionitem = data.JSON.stringify();
+        commit("ADD_TO_COLLECTION", newcollectionitem);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    },
+    addToWantList({ commit }, newcollectionitem) {
+      console.log('addNote func', newcollectionitem);
+      axios
+        .post(`http://localhost:8000/users/wantlists/addnote`, newcollectionitem)
         .then(data => {
           let newcollectionitem = data.JSON.stringify();
-          commit("ADD_TO_COLLECTION", newcollectionitem);
+          commit("ADD_TO_WANTLIST", newcollectionitem);
         })
         .catch(error => {
           console.log(error);
         });
     },
-    addToWantList({ commit }) {
+    deleteCollectionItem({ commit }, id) {
       axios
-        .get(`http://localhost:8000/users/wantlists/addnote/`)
-        .then(data => {
-          let newcollectionitem = data.JSON.stringify();
-          commit("ADD_TO_WANTLIST", newcollectionitem);
-        })
+        .delete(`http://localhost:8000/users/collections/deletenote/${id.id}`)
         .catch(error => {
           console.log(error);
         });

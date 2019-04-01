@@ -68,31 +68,32 @@
               <div class="date">Date: {{item.issue_date}}</div>
             </v-card-text>
             <v-select
-              class="row ml-3 mr-3"
               v-if="$route.name == 'CollectionAdd' "
-              v-model="selectedGrade"
-              v-validate="'required'"
-              :items="grade"
+              v-model="grade"
+              :items="grades"
+              :rules="[(v) => !!v || 'Choose grade before adding.']"
+              required
+              @change="($event)"
+              item-text="grade"
               label="Select Grade"
               data-vv-name="select"
-              required
+              class="row ml-3 mr-3"
               max-width="250px"
             ></v-select>
             <v-card-actions class="row" v-if="$route.name == 'CollectionAdd' ">
-              <v-btn flat color="blue" @click="addNote(item)">
+              <v-btn flat color="blue" @click="collectionAd(item)">
                 <v-icon small left>star</v-icon>
                 <span>Add to Collection</span>
               </v-btn>
             </v-card-actions>
             <v-card-actions v-if="$route.name == 'WantListAdd' ">
-              <v-btn flat color="blue" @click="addWant(this.user_id)">
+              <v-btn flat color="blue" @click="wantListAd(item)">
                 <v-icon small left>star</v-icon>
                 <span>Add to Want List</span>
               </v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
-        {{ collection }}
       </v-layout>
     </v-container>
   </v-content>
@@ -100,33 +101,35 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
-
 export default {
   mounted() {
     this.$store.dispatch("loadRegionList");
     this.$store.dispatch("loadCountryList");
     this.$store.dispatch("loadBanknotes");
     this.$store.dispatch("loadCollection");
-    console.log("user", this.inCollection.id);
   },
-  data: function() {
+  data() {
     return {
       collection: [],
+      wantlist: [],
       selectedRegion: "",
       selectedCountry: "",
       user_id: "",
-      note_id: "",
+      banknote_id: "",
       in_collection: "",
       in_wantlist: "",
       grade: ""
     };
   },
   computed: {
-    grade() {
+    currentUser() {
+      return this.$store.state.user
+    },
+    grades() {
       const noteGrades = [];
-      const grades = ["UNC", "AU", "EF", "VF", "F", "VG", "G", "Fair", "P"];
-      for (let i = 0; i < grades.length; i++) {
-        noteGrades.push(grades[i]);
+      const grade = ["UNC", "AU", "EF", "VF", "F", "VG", "G", "Fair", "P"];
+      for (let i = 0; i < grade.length; i++) {
+        noteGrades.push(grade[i]);
       }
       return noteGrades;
     },
@@ -169,34 +172,32 @@ export default {
     }
   },
   methods: {
-    addNote(item) {
-      this.collection.push({
-        note_id: item.banknote_id,
-        user_id: this.user_id,
-        grade: item.grade
-      });
-    },
-    addWant(item) {
-      const { user_id, note_id } = this.item;
-    },
-    collectionAd: function() {
-      const { user_id, note_id } = this;
-      let newCollectionNote = {
+    collectionAd: function(item) {
+      const { banknote_id } = item
+      const { id } = this.currentUser
+      const { grade } = this
+      let user_id = id
+      let note_id = banknote_id
+      let newcollectionitem = {
+        note_id,
         user_id,
-        note_id
+        grade
       };
       this.$store
-        .dispatch("addToCollection", { newCollectionNote })
-        .then(() => {
+        .dispatch("addToCollection", { newcollectionitem }).then(() => {
           this.$router.push("dashboard");
         });
     },
-    wantListAd: function() {
-      let newWantListNote = {
-        user_id,
-        note_id
+    wantListAd: function(item) {
+      const { banknote_id } = item
+      const { id } = this.currentUser
+      let user_id = id
+      let note_id = banknote_id
+      let newcollectionitem = {
+        note_id,
+        user_id
       };
-      this.$store.dispatch("addToWantList", { newWantListNote }).then(() => {
+      this.$store.dispatch("addToWantList", { newcollectionitem }).then(() => {
         this.$router.push("dashboard");
       });
     }

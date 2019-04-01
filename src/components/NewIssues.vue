@@ -14,14 +14,7 @@
                             <div class="country">Country: {{item.country}}</div>
                             <div class="denomination">Denomination: {{item.denomination}} {{item.currency}}</div>
                             <div class="date">Date: {{item.issue_date}}</div>
-                            <div class="comments">Comments: </div>
                         </v-card-text>
-                        <v-card-actions>
-                            <v-btn flat color="blue">
-                                <v-icon small left>star</v-icon>
-                                <span>Add Comments</span>
-                            </v-btn>                            
-                        </v-card-actions>
                     </v-card>
                 </v-flex>
             </v-layout>

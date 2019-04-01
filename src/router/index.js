@@ -17,6 +17,7 @@ import CollectionView from "@/components/DashboardItems/CollectionView";
 import CollectionAdd from "@/components/DashboardItems/CollectionAdd";
 import WantListView from "@/components/DashboardItems/WantListView";
 import WantListAdd from "@/components/DashboardItems/WantListAdd";
+import EditNote from "@/components/DashboardItems/EditNote";
 // import AddNewNote from "@/components/DashboardItems/AddNewNote";
 
 
@@ -109,6 +110,11 @@ export default new Router({
       path: "/home2",
       name: "Home2",
       component: Home2
+    },
+    {
+      path: "/editnote",
+      name: "EditNote",
+      component: EditNote
     },
     // {
     //   path: "/addnewnote",

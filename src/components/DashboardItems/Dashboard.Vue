@@ -1,11 +1,11 @@
 <template>
   <v-layout>
     <v-flex xs12 lg6 m-2>
-      <v-card class="pa-3 mx-4">
+      <v-card class="head-image pa-3 mx-4">
         <v-img
           class="black--text"
           height="200px"
-          src="https://s3-us-west-2.amazonaws.com/note-collect-1/Comoros-17-2000Francs-2005.jpg"
+          src="https://s3-us-west-2.amazonaws.com/note-collect-1/Bolivia_opaque1.jpg"
         >
           <v-container fluid>
             <v-layout>
@@ -42,7 +42,7 @@
         <v-img
           class="black--text"
           height="200px"
-          src="https://s3-us-west-2.amazonaws.com/note-collect-1/Angola-158-5000Kwanzas-10-2012.jpg"
+          src="https://s3-us-west-2.amazonaws.com/note-collect-1/Brazil_opaque1.jpg"
         >
           <v-container fluid>
             <v-layout>
@@ -81,7 +81,7 @@ import { mapState, mapGetters } from "vuex";
 export default {
   mounted() {
     this.$store.dispatch("loadCollection");
-    console.log("select", this);
+    console.log("view", this);
   },
   computed: {
     inCollection() {
@@ -91,7 +91,7 @@ export default {
     },
     inWantlist() {
       return this.$store.getters.getUserWantList;
-    }
+    },
   },
   methods: {}
 };
@@ -105,4 +105,5 @@ export default {
   border: 1px black solid;
   margin-left: 5px;
 }
+
 </style>

@@ -13,7 +13,6 @@ import CombinedSelect from "../selects/CombinedSelect";
 export default {
   mounted() {
     this.$store.dispatch("loadBanknotes");
-    console.log("addcolleciton", this);
   },
   computed: {
     banknotes() {

@@ -5,14 +5,14 @@
       <v-layout row>
         <v-flex xs6>
           <v-card class="elevation-5 ma-2" light flat>
-            <v-card-text class="total">Total Notes in Collection: {{totalCollection}}</v-card-text>
+            <v-card-text class="total">Total Notes in Collection: {{this.totalCollection}}</v-card-text>
           </v-card>
         </v-flex>
         <v-flex xs6>
-          <v-card light tile flat align-center class="elevation-5 ma-2">
+          <v-card light class="elevation-5 mt-2">
             <v-card-text class="first">Most Recent Addition:</v-card-text>
-            <v-responsive align-center class="pt-4" >
-              <v-img class="ml-4" :src="this.mostRecentAddition.img_url" max-width="200px"></v-img>
+            <v-responsive>
+              <v-img class="ml-5" :src="this.mostRecentAddition.img_url" max-width="250px"></v-img>
             </v-responsive>
             <v-card-text>
               {{this.mostRecentAddition.name}} {{this.mostRecentAddition.catalog_no}}
@@ -41,10 +41,8 @@
               <div class="date">Grade: {{item.grade}}</div>
             </v-card-text>
             <v-card-actions class="justify-center">
-              <v-btn flat color="blue" @click="addNote(item)">
-                <v-icon small left>fa fa-trash-alt</v-icon>
-                <span>Delete from Collection</span>
-              </v-btn>
+              <v-btn small dark color="blue">Edit</v-btn>
+              <v-btn small dark color="blue" @click="deleteNote(item)">Delete</v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -59,20 +57,37 @@ export default {
   mounted() {
     this.$store.dispatch("loadCollection");
   },
+  data() {
+    return {
+      id: ""
+    };
+  },
   computed: {
+    currentUser() {
+      return this.$store.state.user;
+    },
     inCollection() {
       return this.$store.getters.getUserCollection;
     },
-    totalCollection() {
-      return this.$store.getters.getUserCollectionSize;
+    noteId() {
+      return this.$store.getters.getUserCollection.map(
+        collection => collection.id
+      );
     },
     totalCollection() {
       return this.$store.getters.getUserCollectionSize;
     },
     mostRecentAddition() {
-      console.log(this.$store.getters.getUserCollection.pop());
-
       return this.$store.getters.getUserCollection.pop();
+    }
+  },
+  methods: {
+    deleteNote(item) {
+      const { id } = item;
+      let noteToDelete = { id };
+      this.$store.dispatch("deleteCollectionItem", { id }).then(() => {
+        this.$router.push("/dashboard");
+      });
     }
   }
 };
