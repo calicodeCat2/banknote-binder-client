@@ -107,7 +107,7 @@ export default new Router({
     },
     {
       path: "/editnote",
-      name: "EditNote",
+      name: "editnote",
       component: EditNote
     },
     // {

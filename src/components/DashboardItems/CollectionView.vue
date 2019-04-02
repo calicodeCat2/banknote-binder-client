@@ -41,7 +41,6 @@
               <div class="date">Grade: {{item.grade}}</div>
             </v-card-text>
             <v-card-actions class="justify-center">
-              <v-btn small dark color="blue">Edit</v-btn>
               <v-btn small dark color="blue" @click="deleteNote(item)">Delete</v-btn>
             </v-card-actions>
           </v-card>
@@ -59,7 +58,8 @@ export default {
   },
   data() {
     return {
-      id: ""
+      id: "",
+      item: ""
     };
   },
   computed: {
@@ -89,7 +89,7 @@ export default {
         this.$router.push("/dashboard");
       });
     }
-  }
+  },
 };
 </script>
 
