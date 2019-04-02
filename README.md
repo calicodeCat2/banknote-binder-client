@@ -4,7 +4,7 @@
 
 ## Home Page
 
-    As a user when I go to the root route, I see a nav bar with a brand and links to search, new issued, login and register.
+    As a user when I go to the root route, I see a nav bar with a brand and links to search, new issues, login and register.
 
     Random selections of notes from the database are displayed with information about them.
 
@@ -22,23 +22,25 @@
 
 ## Register
 
-    As a user, when I got to the /register route, I can register for the site with my first and last name, email and password. Once I register I am redirected to the /login route.
+    As a user, when I arrive at the /register route, I can register for the site with my first and last name, email and password. Once I register I am redirected to the /login route.
 
 ## Login
 
-    As a user, when I arrive at the /login route, I can login with my email and password. I am redirected to the dashboard where I see the last three notes added to my Collection and my Want List.
+    As a user, when I arrive at the /login route, I can login with my email and password. I am redirected to the dashboard.
+    
+##  Dashboard
 
-    From the dashboard I can choose to view my collection, add to my collection, view my want list or add to my want list.
+    As a user, on the dashboard I see the last three notes added to my collection and to my want list. I can select from two options for each list. I can either view my collection or want list or add new notes to them.
 
 ## View Collection
 
-    As a user, when I navigate to the View Collection link, I see the last 15 notes added to my collection. At the top is a list of the total notes in my collection, as well as the information on the last note added to my collection.
+    As a user, when I navigate to the View Collection link, I see the  notes in my collection. At the top is a list of the total notes in my collection, as well as the information on the last note added to my collection, and, eventually, a value for my collection based on purchase or catalog price.
 
     On this view, there is a button to delete notes from my collection.
 
 ## View Want List
 
-    As a user, when I navigate to the View Want List link, I see the last 15 notes added to my Want List. At the top is a list of the total notes in my Want List, as well as the information on the last note added to my Want List.
+    As a user, when I navigate to the View Want List link, I see the last 15 notes added to my Want List. At the top is a list of the total notes in my Want List, as well as the information on the last note added to my Want List and the one that has been on my list for the longest time.
 
     On this view I can choose to delete notes from my Want List, or Move them to my collection.
 
@@ -46,7 +48,7 @@
 
     As a user, when I navigate to the Add to Collection route, I see dual selects like the browse page. When the notes populate, I see only those that are not in my collection. If a note is on my want list, a burst will show on the note to inform me that is is on the want list.
 
-    There is a button to add the note to my collection. I can choose to return to the dashboard or continue adding notes.
+    There is a button to add the note to my collection. I choose the grade of my specimen before clicking the add button. I can choose to return to the dashboard or continue adding notes.
 
 
 ## Add to Want List

@@ -71,7 +71,7 @@
               v-if="$route.name == 'CollectionAdd' "
               v-model="grade"
               :items="grades"
-              :rules="[(v) => !!v || 'Choose grade before adding.']"
+              :rules="[(v) => !!v || 'item is required']"
               required
               @change="($event)"
               item-text="grade"

@@ -5,24 +5,24 @@
       <v-layout row>
         <v-flex xs6>
           <v-card class="elevation-5 ma-2" light flat>
-            <v-card-text class="total">Total Notes in Collection: {{this.totalCollection}}</v-card-text>
+            <v-card-text class="total title">Total Notes in Collection: {{this.totalCollection}}</v-card-text>
           </v-card>
         </v-flex>
         <v-flex xs6>
           <v-card light class="elevation-5 mt-2">
-            <v-card-text class="first">Most Recent Addition:</v-card-text>
+            <v-card-text class="first title">Most Recent Addition:</v-card-text>
             <v-responsive>
               <v-img class="ml-5" :src="this.mostRecentAddition.img_url" max-width="250px"></v-img>
             </v-responsive>
-            <v-card-text>
+            <v-card-text class="subheading">
               {{this.mostRecentAddition.name}} {{this.mostRecentAddition.catalog_no}}
-              {{this.mostRecentAddition.denomination}} {{this.mostRecentAddition.currency}} {{this.mostRecentAddition.issue_date}}
+              {{this.mostRecentAddition.denomination}} {{this.mostRecentAddition.currency}} ({{this.mostRecentAddition.issue_date}})
             </v-card-text>
           </v-card>
         </v-flex>
         <v-flex xs6>
           <v-card light tile flat class="elevation-5 ma-2">
-            <v-card-text class="recent">Estimated Value of Collection: Invaluable</v-card-text>
+            <v-card-text class="recent title">Estimated Value of Collection: Inestimable</v-card-text>
           </v-card>
         </v-flex>
       </v-layout>

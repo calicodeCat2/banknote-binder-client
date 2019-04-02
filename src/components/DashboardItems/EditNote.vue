@@ -1,20 +1,30 @@
 <template>
   <v-layout>
-    <v-flex lg8 offset-sm2>
+    <v-flex lg4 offset-sm3 class="mt-4 elevation-5">
       <v-card>
         <v-img
-          src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
-          aspect-ratio="2.75"
+          src="https://s3-us-west-2.amazonaws.com/note-collect-1/Kenya-17-20Shillings-1-7-1978.jpg"
+          max-width="500px"
+          class="ma-4"
         ></v-img>
         <v-card-title primary-title>
           <div>
-            <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
-            <div> {{ card_text }} </div>
+            <h3 class="headline mb-0">Note to Edit</h3>
+            <div>{{ card_text }}</div>
           </div>
         </v-card-title>
-        <v-card-actions>
-           <v-select
-              v-if="$route.name == 'CollectionAdd' "
+        <v-form>
+          <v-card-actions>
+            <v-text-field
+              v-model="calatog_no"
+              label="Catalog Number"
+              required
+              class="form-input"
+              offset-sm3
+              ></v-text-field>
+          </v-card-actions>
+          <v-card-actions>
+            <v-select
               v-model="selectGrade"
               :items="grades"
               :rules="[(v) => !!v || 'Choose grade before adding.']"
@@ -26,8 +36,9 @@
               class="row ml-3 mr-3"
               max-width="250px"
             ></v-select>
-          <v-btn flat color="orange">Explore</v-btn>
-        </v-card-actions>
+            <v-btn flat color="blue">Edit</v-btn>
+          </v-card-actions>
+        </v-form>
       </v-card>
     </v-flex>
   </v-layout>
@@ -38,9 +49,8 @@
 export default {
   data() {
     return {
-
-      grade: "",
-    }
+      grade: ""
+    };
   },
   computed: {
     grades() {
@@ -50,8 +60,13 @@ export default {
         noteGrades.push(grade[i]);
       }
       return noteGrades;
-    },
+    }
   }
 };
 </script>
+
+<style scoped>
+
+</style>
+
 

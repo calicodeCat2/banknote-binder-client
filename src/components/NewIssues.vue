@@ -2,7 +2,7 @@
    <v-content>
       <h1>New Issues</h1>
     <div class="notes">
-        <h1 class="subheading grey--text">New Issues for March 2019</h1>
+        <h1 class="title grey--text">April 2019</h1>
         <v-container class="my-5">
             <v-layout row wrap>
                 <v-flex m6 lg3 v-for="(item, index) in newIssues" :key="index">

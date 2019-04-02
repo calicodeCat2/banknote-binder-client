@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "@/components/Home";
-import Home2 from "@/components/Home2";
 import About from "@/components/About";
 import Register from "@/components/Register";
 import Login from "@/components/Login";
@@ -105,11 +104,6 @@ export default new Router({
       path: "/wantlist",
       name: "WantListAdd",
       component: WantListAdd
-    },
-    {
-      path: "/home2",
-      name: "Home2",
-      component: Home2
     },
     {
       path: "/editnote",

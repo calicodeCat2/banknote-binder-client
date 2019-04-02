@@ -14,7 +14,6 @@
               <v-card flat tile class="d-flex">
                 <v-img
                   :src="item.img_url"
-                  :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
                   aspect-ratio="1"
                   class="grey lighten-2"
                 >

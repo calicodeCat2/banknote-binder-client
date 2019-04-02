@@ -212,6 +212,13 @@ export default new vuex.Store({
           console.log(error);
         });
     },
+    deleteWantListItem({ commit }, id) {
+      axios
+        .delete(`http://localhost:8000/users/collections/deletenote/${id.id}`)
+        .catch(error => {
+          console.log(error);
+        });
+    },
     // Logout function clears storage and resets user state, but does not push to /login as defined in Method on Header.vue
     logout({ commit }) {
       localStorage.removeItem("user");
