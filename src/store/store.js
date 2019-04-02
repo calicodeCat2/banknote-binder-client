@@ -90,11 +90,14 @@ export default new vuex.Store({
     },
     ADD_TO_WANTLIST(state, newcollectionitem) {
       state.collections = [...collections, newcollectionitem];
+    },
+    SET_LOGOUT(state) {
+      state.user = {}
     }
   },
   actions: {
     loginUser({ commit }, email) {
-      axios
+      return axios
         .post("http://localhost:8000/users/login", { email: email.email })
         .then(data => {
           let user = data.data[0];
@@ -137,8 +140,10 @@ export default new vuex.Store({
           console.log(error);
         });
     },
-    loadCollection({ commit }, id) {
-      let userInfo = JSON.parse(localStorage.getItem('user'))
+    loadCollection({ commit, state }, id) {
+      let userInfo = state.user
+      console.log(userInfo);
+      
       axios
         .get(`http://localhost:8000/users/collection/${userInfo.id}`)
         .then(data => {
@@ -222,6 +227,7 @@ export default new vuex.Store({
     // Logout function clears storage and resets user state, but does not push to /login as defined in Method on Header.vue
     logout({ commit }) {
       localStorage.removeItem("user");
+      commit('SET_LOGOUT')
       // state.user = {}
     }
   }

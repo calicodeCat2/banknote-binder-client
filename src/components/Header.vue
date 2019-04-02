@@ -27,7 +27,7 @@ export default {
   computed: {
     isLoggedIn() {
   
-    return !!localStorage.getItem('user')
+    return !!Object.keys(this.$store.state.user).length
 
     }
   },

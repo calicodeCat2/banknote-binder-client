@@ -69,9 +69,9 @@
             </v-card-text>
             <v-select
               v-if="$route.name == 'CollectionAdd' "
-              v-model="grade"
+              v-model="item.isSelected"
               :items="grades"
-              :rules="[(v) => !!v || 'item is required']"
+              :rules="[(v) => !!v || 'You must select a grade']"
               required
               @change="($event)"
               item-text="grade"
